@@ -36,3 +36,4 @@ infra/*.tfstate.*
 
 # Ansible vault password files (never commit)
 ansible/.vault_pass
+ansible/inventory.ini
