@@ -26,3 +26,13 @@ Thumbs.db
 
 # Docker
 *.pid
+
+# Terraform
+infra/.terraform/
+infra/terraform.tfstate
+infra/terraform.tfstate.*
+infra/*.tfstate
+infra/*.tfstate.*
+
+# Ansible vault password files (never commit)
+ansible/.vault_pass
