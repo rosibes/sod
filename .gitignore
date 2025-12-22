@@ -33,6 +33,7 @@ infra/terraform.tfstate
 infra/terraform.tfstate.*
 infra/*.tfstate
 infra/*.tfstate.*
+infra/terraform.tfvars
 
 # Ansible vault password files (never commit)
 ansible/.vault_pass

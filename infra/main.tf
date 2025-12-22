@@ -54,7 +54,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.admin_cidr]   // my personal public IP
+    cidr_blocks = [var.admin_cidr]  
   }
 
   ingress {
