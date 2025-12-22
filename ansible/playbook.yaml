@@ -44,7 +44,7 @@
       git:
         repo: "{{ repo_url }}"
         dest: "{{ app_dir }}"
-        version: "{{ app_version }}"
+        version: "{{ repo_version }}"
         force: yes              # if the folder already exists Ansible wil OVERWRITE it 
                                 # (if the repo already exists and is not clean - ansible will fail)
       become_user: ubuntu
@@ -63,12 +63,13 @@
                                                           # --remove-orphans = remove containers that were created by a previous compose run but are no longer defined in the compose file
       command: > 
         docker compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans 
-                                                                 
+      args: 
+        chdir: "{{ app_dir }}"                                                            
       
 
   handlers:
     - name: Restart app stack
       command: >
-        docker compose -f {{ compose_file }}  --env-file .env up -d --remove-orphans
+        docker compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans
       args:
         chdir: "{{ app_dir }}"
