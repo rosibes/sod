@@ -23,7 +23,7 @@
           - curl
           - git
           - docker.io
-          - docker-compose-plugin
+          - docker-compose
         state: present
       
     - name: Enable and start Docker 
@@ -62,7 +62,7 @@
     - name: Bring up the stack with Docker compose        # --pull alway = always pull the latest iamge from the registry before starting containers
                                                           # --remove-orphans = remove containers that were created by a previous compose run but are no longer defined in the compose file
       command: > 
-        docker compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans 
+        docker-compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans 
       args: 
         chdir: "{{ app_dir }}"                                                            
       
@@ -70,6 +70,6 @@
   handlers:
     - name: Restart app stack
       command: >
-        docker compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans
+        docker-compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans
       args:
         chdir: "{{ app_dir }}"
