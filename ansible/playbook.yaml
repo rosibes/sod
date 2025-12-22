@@ -1,0 +1,74 @@
+---
+- name: Deploy todo app to EC2
+  hosts: todo_app
+  become: true
+
+  vars:
+    app_dir: /opt/todo-app
+    repo_url: https://github.com/rosibes/sod
+    repo_version: "v1.0.0"
+    compose_file: docker-compose.prod.yml
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - git
+          - docker.io
+          - docker-compose-plugin
+        state: present
+      
+    - name: Enable and start Docker 
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Ensure app directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+
+    - name: Clone app repo
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: "{{ app_version }}"
+        force: yes              # if the folder already exists Ansible wil OVERWRITE it 
+                                # (if the repo already exists and is not clean - ansible will fail)
+      become_user: ubuntu
+      notify: Restart app stack   # if the repo content at {{ app_dir }} changes, notify the handler called 'Restart app stack'
+
+    - name: Render .env file
+      template:
+        src: templates/prod.env.j2
+        dest: "{{ app_dir }}/.env"
+        mode: "0600"
+        owner: ubuntu
+        group: ubuntu
+      notify: Restart app stack
+
+    - name: Bring up the stack with Docker compose        # --pull alway = always pull the latest iamge from the registry before starting containers
+                                                          # --remove-orphans = remove containers that were created by a previous compose run but are no longer defined in the compose file
+      command: > 
+        docker compose -f {{ compose_file }} --env-file .env up -d --pull always --remove-orphans 
+                                                                 
+      
+
+  handlers:
+    - name: Restart app stack
+      command: >
+        docker compose -f {{ compose_file }}  --env-file .env up -d --remove-orphans
+      args:
+        chdir: "{{ app_dir }}"
