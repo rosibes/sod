@@ -66,6 +66,23 @@
       args: 
         chdir: "{{ app_dir }}"                                                            
       
+    - name: Wait for frontend HTTP 200
+      uri:
+        url: "http://{{ inventory_hostname }}/"
+        status_code: 200
+      retries: 30
+      delay: 2
+      register: front
+      until: front.status == 200   
+
+    - name: Wait for backend health
+      uri:            # uri module - makes a http request (like curl)
+        url: "http://{{ inventory_hostname }}:5000/api/health"
+        status_code: 200
+      retries: 30
+      delay: 2
+      register: back
+      until: back.status == 200
 
   handlers:
     - name: Restart app stack
