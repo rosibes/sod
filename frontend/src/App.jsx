@@ -10,7 +10,7 @@ export default function App() {
 
   async function fetchTodos() {
     try {
-      const res = await fetch(`${API}/api/todos`)
+      const res = await fetch(`${API}/todos`)
       const data = await res.json()
       setTodos(data)
     } catch (e) {
@@ -28,7 +28,7 @@ export default function App() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${API}/api/todos`, {
+      const res = await fetch(`${API}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title })
@@ -45,7 +45,7 @@ export default function App() {
 
   async function removeTodo(id) {
     try {
-      await fetch(`${API}/api/todos/${id}`, { method: 'DELETE' })
+      await fetch(`${API}/todos/${id}`, { method: 'DELETE' })
       await fetchTodos()
     } catch (e) {
       setError('Failed to delete todo')
@@ -54,7 +54,7 @@ export default function App() {
 
   async function toggleTodo(t) {
     try {
-      await fetch(`${API}/api/todos/${t.id}`, {
+      await fetch(`${API}/todos/${t.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !t.completed })
