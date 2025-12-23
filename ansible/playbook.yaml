@@ -62,7 +62,7 @@
     - name: Bring up the stack with Docker compose        # --pull alway = always pull the latest iamge from the registry before starting containers
                                                           # --remove-orphans = remove containers that were created by a previous compose run but are no longer defined in the compose file
       command: > 
-        docker-compose -f {{ compose_file }} --env-file .env up -d --remove-orphans 
+        docker-compose -f {{ compose_file }} --env-file .env up -d --remove-orphans --build --force-recreate
       args: 
         chdir: "{{ app_dir }}"                                                            
       
@@ -77,7 +77,7 @@
 
     - name: Wait for backend health
       uri:            # uri module - makes a http request (like curl)
-        url: "http://{{ inventory_hostname }}:5000/api/health"
+        url: "http://{{ inventory_hostname }}/api/health"
         status_code: 200
       retries: 30
       delay: 2
@@ -87,6 +87,6 @@
   handlers:
     - name: Restart app stack
       command: >
-        docker-compose -f {{ compose_file }} --env-file .env up -d --remove-orphans
+        docker-compose -f {{ compose_file }} --env-file .env up -d --remove-orphans --build --force-recreate
       args:
         chdir: "{{ app_dir }}"
