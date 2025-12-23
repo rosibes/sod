@@ -51,6 +51,18 @@
         state: present
         update_cache: yes
 
+    - name: Enable and start Docker
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Enable and start containerd
+      systemd:
+        name: containerd
+        enabled: yes
+        state: started
+
     - name: Ensure app directory exists
       file:
         path: "{{ app_dir }}"
