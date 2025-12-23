@@ -6,7 +6,7 @@
   vars:
     app_dir: /opt/todo-app
     repo_url: https://github.com/rosibes/sod
-    repo_version: "v1.0.0"
+    repo_version: "v1.0.1"
     compose_file: docker-compose.prod.yml
 
   pre_tasks:
