@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API = import.meta.env.VITE_API_URL || '/api'
 
 export default function App() {
   const [todos, setTodos] = useState([])
