@@ -28,13 +28,14 @@ Thumbs.db
 *.pid
 
 # Terraform
-infra/.terraform/
-infra/terraform.tfstate
-infra/terraform.tfstate.*
-infra/*.tfstate
-infra/*.tfstate.*
-infra/terraform.tfvars
-
+# Terraform
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/terraform.tfvars
+**/terraform.tfvars.json
+.crash.log
+crash.*.log
 # Ansible vault password files (never commit)
 ansible/.vault_pass
 ansible/inventory.ini
