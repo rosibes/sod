@@ -12,3 +12,7 @@ variable "public_subnet_cidr" {
   type        = string
   description = "CIDR block for the public subnet"
 }
+
+variable "common_tags" {
+  type = map(string)
+}

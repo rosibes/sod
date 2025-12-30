@@ -26,9 +26,11 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
+  tags = merge(
+    var.common_tags,
+    {
     Name = "${var.name_prefix}-ec2-sg"
-  }
+  })
 }
 
 resource "aws_key_pair" "main" {
@@ -44,11 +46,19 @@ resource "aws_instance" "app" {
 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
-  tags = {
+    tags = merge(
+    var.common_tags,
+    {
     Name = "${var.name_prefix}-app-ec2"
-  }
+  })
 }
 
 resource "aws_eip" "app" {
   instance = aws_instance.app.id
+
+    tags = merge(
+    var.common_tags,
+    {
+    Name = "${var.name_prefix}-eip"
+  })
 }

@@ -37,3 +37,7 @@ variable "public_key_path" {
   type        = string
   description = "Path to your SSH public key"
 }
+
+variable "common_tags" {
+  type = map(string)
+}

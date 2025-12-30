@@ -11,3 +11,7 @@ variable "instance_type" { type = string }
 
 variable "key_pair_name" { type = string }
 variable "public_key_path" { type = string }
+
+variable "common_tags" {
+  type = map(string)
+}
