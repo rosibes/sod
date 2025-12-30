@@ -1,0 +1,3 @@
+state_bucket_name = "xxxxx"
+lock_table_name   = "xxxxx"
+aws_region        = "xxxxx"
