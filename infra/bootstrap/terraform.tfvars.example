@@ -1,3 +1,3 @@
-state_bucket_name = "xxxxx"
-lock_table_name   = "xxxxx"
-aws_region        = "xxxxx"
+state_bucket_name = "s3-bucket-name"
+lock_table_name   = "dynamodb-name"
+aws_region        = "eu-west-1"
