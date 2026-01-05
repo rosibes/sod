@@ -15,4 +15,5 @@ module "compute" {
   instance_type   = var.instance_type
   key_pair_name   = var.key_pair_name
   public_key_path = var.public_key_path
+  environment     = var.environment
 }

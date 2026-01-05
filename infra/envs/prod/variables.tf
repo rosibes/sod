@@ -15,3 +15,7 @@ variable "public_key_path" { type = string }
 variable "common_tags" {
   type = map(string)
 }
+
+variable "environment" {
+  type = string
+}
