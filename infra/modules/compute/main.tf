@@ -46,9 +46,6 @@ resource "aws_instance" "app" {
 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
-    lifecycle {
-    prevent_destroy = var.environment == "prod"
-  }
 
     tags = merge(
     var.common_tags,
