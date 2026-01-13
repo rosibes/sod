@@ -71,7 +71,7 @@ def update_todo(todo_id: int):
         except SQLAlchemyError:
             db.rollback()
             return jsonify({"error": "db_error"}), 500
-        return jsonify({"id": todo.id, "title": todo.title, "completed": todo.completed})
+        return jsonify({"id": todo.id, "titlee": todo.title, "completed": todo.completed})
 
 @app.delete("/api/todos/<int:todo_id>")
 def delete_todo(todo_id: int):
